@@ -1,5 +1,11 @@
 param location string = resourceGroup().location
 
+@description('Pre-shared connection key for the VPN connection.')
+param connectionPreSharedKey string = 'TEe+CcMUmZz8zZP41Cbss9KM5+/RKj7x'
+
+@description('IP address of the local network gateway.')
+param localNetworkGatewayAddress string = '180.150.54.161'
+
 var tags = {
   workload: 'network'
 }
@@ -108,11 +114,32 @@ resource localNetworkGateway 'Microsoft.Network/localNetworkGateways@2022-05-01'
   location: location
   tags: tags
   properties: {
-    gatewayIpAddress: '180.150.54.161'
+    gatewayIpAddress: localNetworkGatewayAddress
     localNetworkAddressSpace: {
       addressPrefixes: [
         '192.168.1.0/24'
       ]
+    }
+  }
+}
+
+// site-to-site vpn connection
+resource connection 'Microsoft.Network/connections@2022-05-01' = {
+  name: 'con-hive'
+  location: location
+  tags: tags
+  properties: {
+    connectionType: 'IPsec'
+    connectionProtocol: 'IKEv2'
+    sharedKey: connectionPreSharedKey
+    enableBgp: false
+    virtualNetworkGateway1: {
+      id: virtualNetworkGateway.id
+      properties: {}
+    }
+    localNetworkGateway2: {
+      id: localNetworkGateway.id
+      properties: {}
     }
   }
 }
