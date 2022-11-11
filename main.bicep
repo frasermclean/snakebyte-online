@@ -1,9 +1,14 @@
 param location string = resourceGroup().location
 
+var tags = {
+  workload: 'network'
+}
+
 // virtual network
 resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-05-01' = {
   name: 'vnet-main'
   location: location
+  tags: tags
   properties: {
     addressSpace: {
       addressPrefixes: [
@@ -45,13 +50,14 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-05-01' = {
 resource networkWatcher 'Microsoft.Network/networkWatchers@2022-05-01' = {
   name: 'nw-main'
   location: location
+  tags: tags
 }
-
 
 // public ip for virtual network gateway
 resource gatewayPublicIpAddress 'Microsoft.Network/publicIPAddresses@2022-05-01' = {
   name: 'pip-vng-main'
   location: location
+  tags: tags
   sku: {
     name: 'Basic'
     tier: 'Regional'
@@ -67,6 +73,7 @@ resource gatewayPublicIpAddress 'Microsoft.Network/publicIPAddresses@2022-05-01'
 resource virtualNetworkGateway 'Microsoft.Network/virtualNetworkGateways@2022-05-01' = {
   name: 'vng-main'
   location: location
+  tags: tags
   properties: {
     enablePrivateIpAddress: false
     sku: {
@@ -92,5 +99,20 @@ resource virtualNetworkGateway 'Microsoft.Network/virtualNetworkGateways@2022-05
         }
       }
     ]
+  }
+}
+
+// local network gateway
+resource localNetworkGateway 'Microsoft.Network/localNetworkGateways@2022-05-01' = {
+  name: 'lgw-hive'
+  location: location
+  tags: tags
+  properties: {
+    gatewayIpAddress: '180.150.54.161'
+    localNetworkAddressSpace: {
+      addressPrefixes: [
+        '192.168.1.0/24'
+      ]
+    }
   }
 }
