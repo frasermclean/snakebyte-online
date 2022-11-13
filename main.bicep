@@ -40,7 +40,7 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-05-01' = {
 
 // network watcher
 resource networkWatcher 'Microsoft.Network/networkWatchers@2022-05-01' = {
-  name: 'nw-main'
+  name: 'nw-${location}'
   location: location
   tags: tags
 }
