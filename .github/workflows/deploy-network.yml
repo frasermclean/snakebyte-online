@@ -33,5 +33,5 @@ jobs:
           resourceGroupName: rg-network-main
           template: network/main.bicep
           parameters: >-
-           connectionPreSharedKey=${{ secrets.CONNECTION_PRE_SHARED_KEY }}
-           localNetworkGatewayAddress=${{ secrets.LOCAL_NETWORK_GATEWAY_ADDRESS }}
+            connectionPreSharedKey=${{ secrets.CONNECTION_PRE_SHARED_KEY }}
+            localNetworkGatewayAddress=${{ secrets.LOCAL_NETWORK_GATEWAY_ADDRESS }}

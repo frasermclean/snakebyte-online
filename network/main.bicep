@@ -1,3 +1,7 @@
+@description('Name of the virtual network')
+param networkName string = 'main'
+
+@description('Azure resource location')
 param location string = resourceGroup().location
 
 @secure()
@@ -11,9 +15,18 @@ var tags = {
   workload: 'network'
 }
 
+module natGateway 'natGateway.bicep' = {
+  name: 'natGateway'
+  params: {
+    nameSuffix: networkName
+    location: location
+    tags: tags
+  }
+}
+
 // virtual network
 resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-05-01' = {
-  name: 'vnet-main'
+  name: 'vnet-${networkName}'
   location: location
   tags: tags
   properties: {
@@ -66,7 +79,7 @@ resource networkWatcher 'Microsoft.Network/networkWatchers@2022-05-01' = {
 
 // public ip for virtual network gateway
 resource gatewayPublicIpAddress 'Microsoft.Network/publicIPAddresses@2022-05-01' = {
-  name: 'pip-vng-main'
+  name: 'pip-vng-${networkName}'
   location: location
   tags: tags
   sku: {
@@ -82,7 +95,7 @@ resource gatewayPublicIpAddress 'Microsoft.Network/publicIPAddresses@2022-05-01'
 
 // virtual network gateway
 resource virtualNetworkGateway 'Microsoft.Network/virtualNetworkGateways@2022-05-01' = {
-  name: 'vng-main'
+  name: 'vng-${networkName}'
   location: location
   tags: tags
   properties: {
