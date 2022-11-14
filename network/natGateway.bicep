@@ -36,3 +36,5 @@ resource natGateway 'Microsoft.Network/natGateways@2022-05-01' = {
     ]
   }
 }
+
+output id string = natGateway.id
