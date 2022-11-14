@@ -1,10 +1,11 @@
 param location string = resourceGroup().location
 
+@secure()
 @description('Pre-shared connection key for the VPN connection.')
-param connectionPreSharedKey string = 'TEe+CcMUmZz8zZP41Cbss9KM5+/RKj7x'
+param connectionPreSharedKey string
 
 @description('IP address of the local network gateway.')
-param localNetworkGatewayAddress string = '180.150.54.161'
+param localNetworkGatewayAddress string
 
 var tags = {
   workload: 'network'
