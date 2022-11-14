@@ -35,6 +35,12 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-05-01' = {
           addressPrefix: '10.0.1.0/24'
         }
       }
+      {
+        name: 'PersonalMediaServicesSubnet'
+        properties: {
+          addressPrefix: '10.0.2.0/24'
+        }
+      }
     ]
   }
 
@@ -44,6 +50,10 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-05-01' = {
 
   resource virtualMachineSubnet 'subnets' existing = {
     name: 'VirtualMachineSubnet'
+  }
+
+  resource personalMediaServicesSubnet 'subnets' existing = {
+    name: 'PersonalMediaServicesSubnet'
   }
 }
 
