@@ -25,4 +25,9 @@ jobs:
           tenant-id: ${{ secrets.TENANT_ID }}
           subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
           client-id: ${{ secrets.CLIENT_ID }}
+      # Create resource group and deploy template
+      - uses: azure/arm-deploy@v1
+        name: Deploy ARM template
+        with:
+          template: main.bicep
 
