@@ -29,5 +29,6 @@ jobs:
       - uses: azure/arm-deploy@v1
         name: Deploy ARM template
         with:
-          template: main.bicep
-
+          scope: resourcegroup
+          resourceGroupName: rg-network-main
+          template: network/main.bicep
