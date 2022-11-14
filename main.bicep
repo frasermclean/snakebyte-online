@@ -37,18 +37,12 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-05-01' = {
     ]
   }
 
-  resource gatewaySubnet 'subnets' = {
+  resource gatewaySubnet 'subnets' existing = {
     name: 'GatewaySubnet'
-    properties: {
-      addressPrefix: '10.0.0.0/24'
-    }
   }
 
-  resource virtualMachineSubnet 'subnets' = {
+  resource virtualMachineSubnet 'subnets' existing = {
     name: 'VirtualMachineSubnet'
-    properties: {
-      addressPrefix: '10.0.1.0/24'
-    }
   }
 }
 
