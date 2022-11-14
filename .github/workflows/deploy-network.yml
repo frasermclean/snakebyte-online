@@ -1,11 +1,24 @@
+name: Deploy Network
+
 on:
   push:
     branches:
       - main
 
 jobs:
-  deploy:
+  deploy-network:
     name: Deploy Network
     runs-on: ubuntu-latest
+    environment: network-main
     steps:
+      # Checkout the repository
       - uses: actions/checkout@v3
+        name: Checkout repository
+      # Login to Azure using stored credentials
+      - uses: azure/login@v1
+        name: Login to Azure
+        with:
+          tenant-id: ${{ secrets.TENANT_ID }}
+          subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
+          client-id: ${{ secrets.CLIENT_ID }}
+
